@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'output.css' %}">
+    <title>
+        {% block title %}
+        Weekly Equipment Checklist 
+        {% endblock title %}
+    </title>
+</head>
+<body>
+    <nav class="flex items-center justify-between p-2 border-b-2">
+        <a href="/">Weekly Equipment Checklist </a>
+        {% if user.is_authenticated %}
+            <form method='post' action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type='submit'>Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}"><button>Login</button></a>
+        {% endif %}
+    </nav>
+    {% block content %}
+        <main class='flex flex-col justify-center items-center mt-[15%] '>
+            <h1 class='text-6xl text-center mb-4'>
+                Welcome, 
+                {% if user.is_authenticated %}
+                    {{ user.username }}
+                {% else %}
+                    Guest
+                {% endif %}
+            </h1>
+            <div class="flex gap-2">
+                <a href="{% url 'request-equipment' %}"><button>Request Equipment</button></a>
+                <a href="{% url 'list-requests' %}"><button>See Requests</button></a>
+            </div>
+        </main>
+    {% endblock content %}
+</body>
+</html>

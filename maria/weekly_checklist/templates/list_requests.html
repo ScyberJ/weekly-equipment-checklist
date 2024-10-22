@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load icon %}
+
+{% block title %}
+    Requests
+{% endblock title %}
+
+{% block content %}
+    <main class='p-2'>
+        <h1 class='text-4xl text-center font-bold mb-4'>Requests</h1>
+        <section class='bg-gray-300 rounded-xl p-2 w-full flex-grow grid grid-cols-1 sm:grid-cols-2    gap-2'> {% for request in requests %}
+                <div class='border rounded-xl w-full p-2 bg-white'>
+                    <header class='flex justify-between items-center'>
+                        <a href="{% url 'request-detail' pk=request.pk %}"><span>REF #{{ request.reference }}</span></a>
+                        <span>Status:{{ request.status }}</span>
+                        {% if user.is_authenticated and user.is_superuser %}
+                            {% if request.status == 'Fixed' %}
+                                {% icon 'check-circle' class='stroke-green-600' %}
+                            {% else %} 
+                                <a href="{% url 'fix-request' pk=request.pk %}">{% icon 'check-circle' class='stroke-slate-600' %}</a>
+                            {% endif %}
+                        {% endif %}
+                    </header>
+                    <p class='flex justify-between items-center'>
+                        <span>Branch {{ request.requested_by.branch.name }}</span>
+                        <span>Branch {{ request.requested_at|date:"d-m-Y" }}</span>
+                        <span>Requested By:{{ request.requested_by.username }}</span>
+                    </p>
+                </div>
+            {% endfor %}
+        </section>
+    </main>
+{% endblock content %}

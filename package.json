@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "dev": "python ./maria/manage.py runserver",
+    "migrate": "python ./maria/manage.py makemigrations && python ./maria/manage.py migrate"
+  },
+  "dependencies": {
+    "tailwindcss": "^3.4.13"
+  }
+}

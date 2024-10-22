@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+button{
+    @apply p-2 rounded bg-blue-600 text-sky-100  
+}
+
+input, textarea, select{
+    @apply bg-slate-200 rounded p-2
+}
+
+form{
+    @apply flex flex-col p-2 gap-2
+}
+
+form input, form textarea, form select {
+    @apply w-full 
+}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load icon %}
+
+{% block title %}
+    Request Equipment
+{% endblock title %}
+
+
+{% block content %}
+<main class='flex flex-col h-[90vh] p-4 gap-2'>
+    <h1 class='text-xl font-bold flex justify-between items-center w-full'>
+        Equipment to be Requested
+        <a href="{% url 'add-equipment' pk=request.pk %}"><button>Add Equipment</button></a>
+    </h1>
+    <section class='bg-gray-300 rounded-xl p-2 w-full flex-grow flex flex-col items-center gap-2'>
+        {% for eq in request.equipment.all %}
+            <div class='border rounded-xl w-full p-2 bg-white'>
+                <header class='flex justify-between items-center px-2'>
+                    <div class='flex justify-between items-center gap-2'>
+                        <span>SN: {{ eq.serial_number }}</span>
+                        <span>Model: {{ eq.model.name }}</span>
+                    </div>
+                    <div class='flex gap-2'>
+                        <a href="{% url 'remove-equipment' pk=eq.pk %}">{% icon 'x' class='bg-red-400 p-2 rounded' %}</a>
+                        <a href="{% url 'add-equipment' pk=request.pk %}?equipment_pk={{ eq.pk }}">{% icon 'edit' class='bg-green-400 p-2 rounded' %}</a>
+                    </div>
+                </header>
+                <p class='m-0 p-2'>
+                    {{ eq.description }}
+                </p>
+            </div> 
+        {% empty %}
+            {% icon 'slash' width='125' height='125' %}
+            <p>No Equipment</p>
+        {% endfor %}
+    </section>
+    <a href="{% url 'submit-request' pk=request.pk %}"><button class='w-full'>Submit</button></a>
+</main>
+{% endblock content %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Add Equipment
+{% endblock title %}
+
+{% block content %}
+<main>
+    <h1 class='text-4xl font-bold text-center'>Add Equipment</h1>
+    {% if form.errors %}
+        {{ form.errors }} 
+    {% endif %}
+    <section>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <button class='mt-4'>Add</button>
+        </form>
+    </section>
+</main> 
+{% endblock content %}
